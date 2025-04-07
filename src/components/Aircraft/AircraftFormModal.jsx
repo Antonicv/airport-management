@@ -2,33 +2,33 @@ import React, { useState, useEffect } from 'react';
 
 export default function AircraftFormModal({ isOpen, onClose, onSubmit, aircraft }) {
     const [formData, setFormData] = useState({
-        CRUISING_SPEED: '',
-        MANUFACTURER: '',
-        MAX_RANGE: '',
-        MODEL: '',
-        PASSENGER_CAPACITY: '',
-        REGISTRATION_NUMBER: ''
+        model: '',
+        manufacturer: '',
+        passengerCapacity: '',
+        maxRange: '',
+        cruisingSpeed: '',
+        registrationNumber: ''
     });
 
-    // Inicializar formulario cuando cambia el aircraft o se abre el modal
+    // Initialize form when aircraft changes or modal opens
     useEffect(() => {
         if (aircraft) {
             setFormData({
-                CRUISING_SPEED: aircraft.CRUISING_SPEED || aircraft.cruising_speed || '',
-                MANUFACTURER: aircraft.MANUFACTURER || aircraft.manufacturer || '',
-                MAX_RANGE: aircraft.MAX_RANGE || aircraft.max_range || '',
-                MODEL: aircraft.MODEL || aircraft.model || '',
-                PASSENGER_CAPACITY: aircraft.PASSENGER_CAPACITY || aircraft.passenger_capacity || '',
-                REGISTRATION_NUMBER: aircraft.REGISTRATION_NUMBER || aircraft.registration_number || ''
+                model: aircraft.model || '',
+                manufacturer: aircraft.manufacturer || '',
+                passengerCapacity: aircraft.passengerCapacity || '',
+                maxRange: aircraft.maxRange || '',
+                cruisingSpeed: aircraft.cruisingSpeed || '',
+                registrationNumber: aircraft.registrationNumber || ''
             });
         } else {
             setFormData({
-                CRUISING_SPEED: '',
-                MANUFACTURER: '',
-                MAX_RANGE: '',
-                MODEL: '',
-                PASSENGER_CAPACITY: '',
-                REGISTRATION_NUMBER: ''
+                model: '',
+                manufacturer: '',
+                passengerCapacity: '',
+                maxRange: '',
+                cruisingSpeed: '',
+                registrationNumber: ''
             });
         }
     }, [aircraft, isOpen]);
@@ -56,33 +56,22 @@ export default function AircraftFormModal({ isOpen, onClose, onSubmit, aircraft 
                         onSubmit(formData);
                     }}>
                         <div className="space-y-4">
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700">Número de Registro</label>
-                                <input
-                                    name="REGISTRATION_NUMBER"
-                                    value={formData.REGISTRATION_NUMBER}
-                                    onChange={handleChange}
-                                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                    required
-                                />
-                            </div>
-
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700">Fabricante</label>
+                                    <label className="block text-sm font-medium text-gray-700">Modelo</label>
                                     <input
-                                        name="MANUFACTURER"
-                                        value={formData.MANUFACTURER}
+                                        name="model"
+                                        value={formData.model}
                                         onChange={handleChange}
                                         className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                         required
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700">Modelo</label>
+                                    <label className="block text-sm font-medium text-gray-700">Fabricante</label>
                                     <input
-                                        name="MODEL"
-                                        value={formData.MODEL}
+                                        name="manufacturer"
+                                        value={formData.manufacturer}
                                         onChange={handleChange}
                                         className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                         required
@@ -92,38 +81,52 @@ export default function AircraftFormModal({ isOpen, onClose, onSubmit, aircraft 
 
                             <div className="grid grid-cols-3 gap-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700">Velocidad Crucero (km/h)</label>
+                                    <label className="block text-sm font-medium text-gray-700">Capacidad</label>
                                     <input
                                         type="number"
-                                        name="CRUISING_SPEED"
-                                        value={formData.CRUISING_SPEED}
+                                        name="passengerCapacity"
+                                        value={formData.passengerCapacity}
                                         onChange={handleChange}
                                         className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                         required
+                                        min="1"
                                     />
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700">Alcance Máximo (km)</label>
                                     <input
                                         type="number"
-                                        name="MAX_RANGE"
-                                        value={formData.MAX_RANGE}
+                                        name="maxRange"
+                                        value={formData.maxRange}
                                         onChange={handleChange}
                                         className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                         required
+                                        min="1"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700">Capacidad de Pasajeros</label>
+                                    <label className="block text-sm font-medium text-gray-700">Velocidad (km/h)</label>
                                     <input
                                         type="number"
-                                        name="PASSENGER_CAPACITY"
-                                        value={formData.PASSENGER_CAPACITY}
+                                        name="cruisingSpeed"
+                                        value={formData.cruisingSpeed}
                                         onChange={handleChange}
                                         className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                         required
+                                        min="1"
                                     />
                                 </div>
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Número de Registro</label>
+                                <input
+                                    name="registrationNumber"
+                                    value={formData.registrationNumber}
+                                    onChange={handleChange}
+                                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                    required
+                                />
                             </div>
                         </div>
                         
