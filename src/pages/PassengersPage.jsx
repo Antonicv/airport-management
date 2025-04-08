@@ -29,7 +29,7 @@ export default function PassengersPage() {
         fetchPassengers();
     }, []);
 
-    // Funciones CRUD
+    // Funcions CRUD
     const handleAdd = () => {
         setCurrentPassenger(null);
         setIsModalOpen(true);
@@ -115,6 +115,14 @@ export default function PassengersPage() {
                     </button>
                 </div>
             )}
+             <div className="mt-4">
+                <button 
+                    onClick={handleAdd}
+                    className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
+                >
+                    + Añadir Pasajero
+                </button>
+            </div>
 
             <div className="overflow-x-auto">
                 <table className="min-w-full mt-4 border-collapse border border-gray-300">
@@ -160,14 +168,7 @@ export default function PassengersPage() {
                 </table>
             </div>
             
-            <div className="mt-4">
-                <button 
-                    onClick={handleAdd}
-                    className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
-                >
-                    + Añadir Pasajero
-                </button>
-            </div>
+           
 
             {/* Modal del formulario */}
             <PassengerFormModal

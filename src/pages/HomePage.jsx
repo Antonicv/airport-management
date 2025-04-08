@@ -55,6 +55,16 @@ export default function HomePage() {
             <TicketIcon />
             Sistema de Reservas
           </Button>
+
+          {/* Nuevo botón para gestión de aeropuertos */}
+          <Button 
+            onClick={() => navigate('/airports')}
+            className="h-24 text-lg flex flex-col items-center justify-center gap-2"
+            variant="outline"
+          >
+            <AirportIcon />
+            Gestión de Aeropuertos
+          </Button>
         </div>
       </main>
     </div>
@@ -96,6 +106,17 @@ function TicketIcon() {
       <path d="M13 5v2"/>
       <path d="M13 17v2"/>
       <path d="M13 11v2"/>
+    </svg>
+  );
+}
+
+function AirportIcon() {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M10 3H3v7h7V3z"/>
+      <path d="M21 3h-7v7h7V3z"/>
+      <path d="M21 14h-7v7h7v-7z"/>
+      <path d="M10 14H3v7h7v-7z"/>
     </svg>
   );
 }
