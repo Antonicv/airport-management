@@ -15,17 +15,32 @@ export default function AirportsPage() {
             setLoading(true);
             setError(null);
             const response = await axios.get('/airports');
+            console.log('Respuesta de la API:', response.data);
+            const apiData = response.data?.data || response.data || [];
+            console.log('Datos de aeropuertos:', apiData);
 
-            console.log('Respuesta del backend:', response.data);
+            const normalizedData = apiData.map(airport => ({
+                id: airport.id || airport.ID,
+                iataCode: airport.iata_code || airport.iataCode,
+                icaoCode: airport.icao_code || airport.icaoCode,
+                name: airport.name,
+                city: airport.city,
+                country: airport.country,
+                region: airport.region,
+                numberOfTerminals: airport.number_of_terminals || airport.numberOfTerminals,
+                numberOfGates: airport.number_of_gates || airport.numberOfGates,
+                hasInternationalFlights: airport.has_international_flights || airport.hasInternationalFlights,
+                contactEmail: airport.contact_email || airport.contactEmail,
+                contactPhone: airport.contact_phone || airport.contactPhone,
+                website: airport.website,
+                altitude: airport.altitude,
+                latitude: airport.latitude,
+                longitude: airport.longitude,
+                timezone: airport.timezone,
+                dst: airport.dst,
+            }));
 
-            
-            const data = Array.isArray(response.data)
-                ? response.data
-                : Array.isArray(response.data.data)
-                ? response.data.data
-                : [];
-
-            setAirportsData(data);
+            setAirportsData(normalizedData);
         } catch (err) {
             console.error('Error al cargar aeropuertos:', err);
             setError('Error al cargar los datos de aeropuertos');
@@ -72,7 +87,7 @@ export default function AirportsPage() {
     const handleSubmit = async (formData) => {
         try {
             if (currentAirport) {
-                await axios.put(`/airports/${currentAirport.ID}`, formData);
+                await axios.put(`/airports/${currentAirport.id}`, formData);
             } else {
                 await axios.post('/airports', formData);
             }
@@ -101,7 +116,7 @@ export default function AirportsPage() {
 
             <button
                 onClick={handleAdd}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
+                className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mb-4"
             >
                 + Añadir Aeropuerto
             </button>
@@ -121,49 +136,50 @@ export default function AirportsPage() {
                         </tr>
                     </thead>
                     <tbody>
-  {airportsData?.map((airport) => (
-    <tr key={airport.id} className="hover:bg-gray-50">
-      <td className="py-2 px-4 border">{airport.iataCode}</td>
-      <td className="py-2 px-4 border">{airport.name}</td>
-      <td className="py-2 px-4 border">{airport.city}</td>
-      <td className="py-2 px-4 border">{airport.country}</td>
-      <td className="py-2 px-4 border text-center">{airport.numberOfTerminals}</td>
-      <td className="py-2 px-4 border text-center">{airport.numberOfGates}</td>
-      <td className="py-2 px-4 border text-center">
-        {airport.hasInternationalFlights ? '✓' : '✗'}
-      </td>
-      <td className="py-2 px-4 border space-x-1">
-        <button
-          onClick={() => handleEdit(airport.id)}
-          className="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded"
-        >
-          Editar
-        </button>
-        <button
-          onClick={() => handleDelete(airport.id)}
-          className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded"
-        >
-          Borrar
-        </button>
-        <button
-          onClick={() => handleShowDetails(airport)}
-          className="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded"
-        >
-          Detalles
-        </button>
-      </td>
-    </tr>
-  ))}
-</tbody>
+                        {airportsData.map((airport) => (
+                            <tr key={airport.id} className="hover:bg-gray-50">
+                                <td className="py-2 px-4 border">{airport.iataCode}</td>
+                                <td className="py-2 px-4 border">{airport.name}</td>
+                                <td className="py-2 px-4 border">{airport.city}</td>
+                                <td className="py-2 px-4 border">{airport.country}</td>
+                                <td className="py-2 px-4 border text-center">{airport.numberOfTerminals}</td>
+                                <td className="py-2 px-4 border text-center">{airport.numberOfGates}</td>
+                                <td className="py-2 px-4 border text-center">
+                                    {airport.hasInternationalFlights ? '✓' : '✗'}
+                                </td>
+                                <td className="py-2 px-4 border space-x-1">
+                                    <button
+                                        onClick={() => handleEdit(airport.id)}
+                                        className="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded"
+                                    >
+                                        Editar
+                                    </button>
+                                    <button
+                                        onClick={() => handleDelete(airport.id)}
+                                        className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded"
+                                    >
+                                        Borrar
+                                    </button>
+                                    <button
+                                        onClick={() => handleShowDetails(airport)}
+                                        className="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded"
+                                    >
+                                        Detalles
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
                 </table>
             </div>
 
             <AirportFormModal
-    isOpen={isModalOpen}
-    onClose={() => setIsModalOpen(false)}
-    onSubmit={handleSubmit}
-    airport={currentAirport} 
-/>
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onSubmit={handleSubmit}
+                airport={currentAirport}
+            />
+
 {detailsAirport && (
   <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
     <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">

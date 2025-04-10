@@ -22,6 +22,9 @@ export default function Navbar() {
           <Button asChild variant="ghost">
             <Link to="/passengers">Pasajeros</Link>
           </Button>
+          <Button asChild variant="ghost">
+            <Link to="/airports">Aeropuertos</Link>
+          </Button>
         </div>
       </div>
     </nav>
