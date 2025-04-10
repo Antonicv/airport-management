@@ -44,7 +44,7 @@ export default function AirportsPage() {
     };
 
     const handleEdit = (id) => {
-        const airport = airportsData.find(a => a.ID === id);
+        const airport = airportsData.find(a => a.id === id);
         setCurrentAirport(airport);
         setIsModalOpen(true);
     };
@@ -159,11 +159,11 @@ export default function AirportsPage() {
             </div>
 
             <AirportFormModal
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-                onSubmit={handleSubmit}
-                airport={currentAirport}
-            />
+    isOpen={isModalOpen}
+    onClose={() => setIsModalOpen(false)}
+    onSubmit={handleSubmit}
+    airport={currentAirport} 
+/>
 {detailsAirport && (
   <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
     <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
