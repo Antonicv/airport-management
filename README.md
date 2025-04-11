@@ -1,89 +1,180 @@
-# React + Vite
+# Airport Management System
 
-## English Documentation
+Este proyecto es un sistema de gestión aeroportuaria que permite administrar vuelos, pasajeros, aeronaves, aeropuertos y tripulación. Está construido con React, TailwindCSS y utiliza Axios para la comunicación con el backend.
 
-### Project Overview
+## Funcionalidades Principales
 
-This project uses React and Vite to create a modern, fast, and efficient front-end application. It includes hot module replacement (HMR) and ESLint rules for better code quality.
+1. **Gestión de Vuelos**:
+   - Crear, editar y eliminar vuelos.
+   - Ver detalles de vuelos, incluyendo aeropuertos de salida y llegada, horarios, capacidad y precios.
 
-### Steps Followed
+2. **Gestión de Pasajeros**:
+   - Crear, editar y eliminar pasajeros.
+   - Mostrar información detallada de cada pasajero.
 
-1. **Project Initialization**:
-   - Created the project using the Vite template for React.
-   - Installed necessary dependencies.
+3. **Gestión de Aeronaves**:
+   - Crear, editar y eliminar aeronaves.
+   - Mostrar información como modelo, fabricante, capacidad y velocidad.
 
-2. **Technologies and Libraries**:
-   - **React**: For building the user interface.
-   - **Vite**: For fast development and build tooling.
-   - **ESLint**: For maintaining code quality.
-   - **React Router**: For client-side routing.
-   - **Axios**: For making HTTP requests.
-   - **Tailwind CSS**: For styling.
+4. **Gestión de Aeropuertos**:
+   - Crear, editar y eliminar aeropuertos.
+   - Mostrar detalles como códigos IATA/ICAO, ubicación, terminales y contacto.
 
-3. **Hooks Used**:
-   - **useState**: To manage component state.
-   - **useEffect**: To handle side effects like data fetching.
-   - **useContext**: For global state management.
-   - **useNavigate** (from React Router): For programmatic navigation.
+5. **Gestión de Tripulación**:
+   - Listar miembros de la tripulación.
+   - Funcionalidades de agregar, editar y eliminar (en desarrollo).
 
-### How to Run the Project
+---
 
-1. Install dependencies:
+## Hooks Utilizados
+
+### 1. **useState**
+   - **Descripción**: Permite manejar el estado local en un componente funcional.
+   - **Uso**:
+     ```javascript
+     const [state, setState] = useState(initialValue);
+     ```
+   - **Ejemplo**:
+     ```javascript
+     const [loading, setLoading] = useState(true);
+     ```
+   - **Paso a Paso**:
+     1. `useState` devuelve un array con dos elementos: el estado actual y una función para actualizarlo.
+     2. Se inicializa con un valor (`initialValue`).
+     3. Para actualizar el estado, se llama a la función `setState`.
+
+---
+
+### 2. **useEffect**
+   - **Descripción**: Permite realizar efectos secundarios en componentes funcionales, como llamadas a APIs o suscripciones.
+   - **Uso**:
+     ```javascript
+     useEffect(() => {
+       // Código a ejecutar
+       return () => {
+         // Cleanup (opcional)
+       };
+     }, [dependencies]);
+     ```
+   - **Ejemplo**:
+     ```javascript
+     useEffect(() => {
+       fetchPassengers();
+     }, []);
+     ```
+   - **Paso a Paso**:
+     1. Se ejecuta después de que el componente se renderiza.
+     2. Si se pasa un array vacío (`[]`), se ejecuta solo una vez.
+     3. Si se pasan dependencias, se ejecuta cada vez que cambian.
+
+---
+
+### 3. **useQuery** (de React Query)
+   - **Descripción**: Maneja el estado de datos remotos (fetching, caching, etc.).
+   - **Uso**:
+     ```javascript
+     const { data, isLoading, error } = useQuery({
+       queryKey: ['key'],
+       queryFn: fetchFunction,
+     });
+     ```
+   - **Ejemplo**:
+     ```javascript
+     const { data: crewMembers, isLoading, error } = useQuery({
+       queryKey: ['crewMembers'],
+       queryFn: fetchCrewMembers,
+     });
+     ```
+   - **Paso a Paso**:
+     1. `queryKey` identifica la consulta.
+     2. `queryFn` es la función que realiza la llamada a la API.
+     3. Devuelve el estado de la consulta (`data`, `isLoading`, `error`).
+
+---
+
+## Props de Componentes
+
+### 1. **PassengerFormModal**
+   - **Props**:
+     - `isOpen` (boolean): Indica si el modal está abierto.
+     - `onClose` (function): Función para cerrar el modal.
+     - `onSubmit` (function): Función para manejar el envío del formulario.
+     - `passenger` (object): Datos del pasajero actual (para edición).
+
+### 2. **FlightFormModal**
+   - **Props**:
+     - `isOpen` (boolean): Indica si el modal está abierto.
+     - `onClose` (function): Función para cerrar el modal.
+     - `onSubmit` (function): Función para manejar el envío del formulario.
+     - `flight` (object): Datos del vuelo actual (para edición).
+     - `airports` (array): Lista de aeropuertos disponibles.
+     - `planes` (array): Lista de aeronaves disponibles.
+
+### 3. **AirportFormModal**
+   - **Props**:
+     - `isOpen` (boolean): Indica si el modal está abierto.
+     - `onClose` (function): Función para cerrar el modal.
+     - `onSubmit` (function): Función para manejar el envío del formulario.
+     - `airport` (object): Datos del aeropuerto actual (para edición).
+
+### 4. **AircraftFormModal**
+   - **Props**:
+     - `isOpen` (boolean): Indica si el modal está abierto.
+     - `onClose` (function): Función para cerrar el modal.
+     - `onSubmit` (function): Función para manejar el envío del formulario.
+     - `aircraft` (object): Datos de la aeronave actual (para edición).
+
+---
+
+## Cómo Funciona el Proyecto
+
+1. **Inicio**:
+   - La aplicación comienza en `HomePage`, donde se muestran botones para navegar a las diferentes secciones.
+
+2. **Navegación**:
+   - Se utiliza `react-router-dom` para manejar las rutas.
+
+3. **Gestión de Datos**:
+   - Los datos se obtienen del backend usando Axios.
+   - Los formularios modales permiten crear y editar registros.
+
+4. **Estilos**:
+   - TailwindCSS se utiliza para los estilos.
+   - `tailwind-merge` y `clsx` se usan para combinar clases dinámicamente.
+
+---
+
+## Instalación
+
+1. Clonar el repositorio:
+   ```bash
+   git clone <repo-url>
+   cd airport-management
+   ```
+
+2. Instalar dependencias:
    ```bash
    npm install
    ```
-2. Start the development server:
+
+3. Iniciar el servidor de desarrollo:
    ```bash
    npm run dev
-   ```
-3. Build the project for production:
-   ```bash
-   npm run build
    ```
 
 ---
 
-## Documentació en Català
+## Contribución
 
-### Resum del Projecte
-
-Aquest projecte utilitza React i Vite per crear una aplicació moderna, ràpida i eficient. Inclou reemplaçament de mòduls en calent (HMR) i regles d'ESLint per millorar la qualitat del codi.
-
-### Passos Seguits
-
-1. **Inicialització del Projecte**:
-   - Es va crear el projecte utilitzant la plantilla de Vite per React.
-   - Es van instal·lar les dependències necessàries.
-
-2. **Tecnologies i Llibreries**:
-   - **React**: Per construir la interfície d'usuari.
-   - **Vite**: Per a eines de desenvolupament i construcció ràpides.
-   - **ESLint**: Per mantenir la qualitat del codi.
-   - **React Router**: Per al routing del costat del client.
-   - **Axios**: Per fer sol·licituds HTTP.
-   - **Tailwind CSS**: Per al disseny.
-
-3. **Hooks Utilitzats**:
-   - **useState**: Per gestionar l'estat dels components.
-   - **useEffect**: Per gestionar efectes secundaris com la recuperació de dades.
-   - **useContext**: Per a la gestió de l'estat global.
-   - **useNavigate** (de React Router): Per a la navegació programàtica.
-
-### Com Executar el Projecte
-
-1. Instal·lar les dependències:
+1. Crear un fork del repositorio.
+2. Crear una rama para tu funcionalidad:
    ```bash
-   npm install
+   git checkout -b feature/nueva-funcionalidad
    ```
-2. Iniciar el servidor de desenvolupament:
-   ```bash
-   npm run dev
-   ```
-3. Construir el projecte per a producció:
-   ```bash
-   npm run build
-   ```
+3. Hacer un pull request.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Licencia
+
+Este proyecto está bajo la licencia MIT.
